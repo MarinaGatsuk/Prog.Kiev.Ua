@@ -1,7 +1,7 @@
 package homework3;
 
 public class Main {
-    public static void main(String[] args) throws GroupOverflowException, StudentNotFoundException {
+    public static void main(String[] args) {
         Student student1 = new Student("Ivan", "Ivanov", Gender.MALE, 11111111);
         Student student2 = new Student("Olena", "Zhdanova", Gender.FEMALE, 11111112);
         Student student3 = new Student("Petro", "Sydorov", Gender.MALE, 11111113);
@@ -16,27 +16,57 @@ public class Main {
 
         Group group1 = new Group("Group1");
 
-        group1.addStudent(student1);
-        group1.addStudent(student2);
-        group1.addStudent(student3);
-        group1.addStudent(student4);
-        group1.addStudent(student5);
-        group1.addStudent(student6);
-        group1.addStudent(student7);
-        group1.addStudent(student8);
-        group1.addStudent(student9);
+        try {
+            group1.addStudent(student1);
+            group1.addStudent(student2);
+            group1.addStudent(student3);
+            group1.addStudent(student4);
+            group1.addStudent(student5);
+            group1.addStudent(student6);
+            group1.addStudent(student7);
+            group1.addStudent(student8);
+            group1.addStudent(student9);
+        } catch (GroupOverflowException e) {
+            System.out.println(e.getMessage());
+        }
 
-        group1.searchStudentByLastName(student10.getLastName());
+        try {
+            group1.searchStudentByLastName(student10.getLastName());
+        } catch (StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
-        group1.addStudent(student10);
-        group1.searchStudentByLastName(student10.getLastName());
-        group1.searchStudentByLastName(student11.getLastName());
+        try {
+            group1.addStudent(student10);
+        } catch (GroupOverflowException e) {
+            System.out.println(e.getMessage());
+        }
 
-        group1.addStudent(student11);
+        try {
+            group1.searchStudentByLastName(student10.getLastName());
+            group1.searchStudentByLastName(student11.getLastName());
+        } catch (StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            group1.addStudent(student11);
+        } catch (GroupOverflowException e) {
+            System.out.println(e.getMessage());
+        }
 
         group1.removeStudentByID(student5.getId());
-        group1.addStudent(student11);
-        group1.searchStudentByLastName(student11.getLastName());
+
+        try {
+            group1.addStudent(student11);
+        } catch (GroupOverflowException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            group1.searchStudentByLastName(student11.getLastName());
+        } catch(StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
 
     }

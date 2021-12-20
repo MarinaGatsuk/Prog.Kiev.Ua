@@ -31,38 +31,31 @@ public class Group {
     }
 
     public void addStudent(Student student) throws GroupOverflowException {
-        try {
-            for (int i = 0; i < this.students.length; i++) {
-                if (this.students[i] != null && i == this.students.length - 1) {
-                    throw new GroupOverflowException("Student " + student.getName() + " " + student.getLastName() + " can't be added to the group " + this.groupName + ". Group is full!");
-                } else if (this.students[i] == null) {
-                    student.setGroupName(this.groupName);
-                    this.students[i] = student;
-                    System.out.println("Student " + student.getName() + " " + student.getLastName() + " is added to group " + this.groupName);
-                    break;
-                }
+        for (int i = 0; i < this.students.length; i++) {
+            if (this.students[i] != null && i == this.students.length - 1) {
+                throw new GroupOverflowException("Student " + student.getName() + " " + student.getLastName() + " can't be added to the group " + this.groupName + ". Group is full!");
+            } else if (this.students[i] == null) {
+                student.setGroupName(this.groupName);
+                this.students[i] = student;
+                System.out.println("Student " + student.getName() + " " + student.getLastName() + " is added to group " + this.groupName);
+                break;
             }
-        } catch (GroupOverflowException e) {
-            System.out.println(e.getMessage());
         }
     }
 
     public Student searchStudentByLastName(String lastName) throws StudentNotFoundException {
-        try {
-            for (int i = 0; i < this.students.length; i++) {
-                if (this.students[i] == null) {
-                    throw new StudentNotFoundException("Student with last name " + lastName + " is not found in group " + this.groupName);
-                } else if (this.students[i].getLastName().equals(lastName)) {
-                    System.out.println("Student with last name " + lastName + " is found in group " + this.groupName + ": " + this.students[i].toString());
-                    return this.students[i];
-                } else if (!this.students[i].getLastName().equals(lastName) && i == this.students.length - 1) {
-                    throw new StudentNotFoundException("Student with last name " + lastName + " is not found in group " + this.groupName);
-                }
+        Student foundStudent = null;
+        for (int i = 0; i < this.students.length; i++) {
+            if (this.students[i] != null && this.students[i].getLastName().equals(lastName)) {
+                System.out.println("Student with last name " + lastName + " is found in group " + this.groupName + ": " + this.students[i].toString());
+                foundStudent = this.students[i];
             }
-        } catch (StudentNotFoundException e) {
-            System.out.println(e.getMessage());
         }
-        return null;
+        if (foundStudent == null) {
+            throw new StudentNotFoundException("Student with last name " + lastName + " is not found in group " + this.groupName);
+        }
+
+        return foundStudent;
     }
 
     public boolean removeStudentByID(int id) {
