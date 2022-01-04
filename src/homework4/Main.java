@@ -1,5 +1,6 @@
 package homework4;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
@@ -31,5 +32,12 @@ public class Main {
                 System.out.println("Null");
             }
         }
+        GroupFileStorage gfs = new GroupFileStorage();
+
+        gfs.saveGroupToCSV(group1);
+        File groupToLoad = gfs.findFileByGroupName(group1.getGroupName(), new File("D:\\Docs"));
+        Group group2 = gfs.loadGroupFromCSV(groupToLoad);
+
+        System.out.println(group2.toString());
     }
 }

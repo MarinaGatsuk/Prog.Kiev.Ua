@@ -1,6 +1,6 @@
 package homework4;
 
-public class Student extends Human {
+public class Student extends Human implements CSVConverter{
     private int id;
     private String groupName;
 
@@ -26,6 +26,19 @@ public class Student extends Human {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+@Override
+    public String toCSVString() {
+        return this.getName()+";"+this.getLastName()+";"+this.getGender().name()+";"+this.id+";"+this.groupName;
+    }
+
+@Override
+        public Student fromCSVString(String csvString) {
+        String [] studentProperties = csvString.split(";");
+        Student student = new Student(studentProperties[0],studentProperties[1], Gender.valueOf(studentProperties[2]), Integer.valueOf(studentProperties[3]));
+        student.setGroupName(studentProperties[4]);
+        return student;
     }
 
     @Override
