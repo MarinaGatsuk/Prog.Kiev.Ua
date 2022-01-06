@@ -2,6 +2,7 @@ package homework4;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Group {
 
@@ -75,11 +76,37 @@ public class Group {
         Arrays.sort(this.getStudents(), Comparator.nullsLast(new StudentsLastNameComparator()));
     }
 
+    public boolean isEqualStudentExists(Student student){
+        for (int i = 0; i < this.students.length; i++){
+            if (student.equals(this.students[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Group{" +
                 "groupName='" + groupName + '\'' +
                 ", students=" + Arrays.toString(students) +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        return Objects.equals(groupName,group.groupName) && Arrays.equals(students, group.students);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31 + Objects.hashCode(groupName);
+        result = 31 * result + Arrays.hashCode(students);
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package homework4;
 
+import java.util.Objects;
+
 public class Student extends Human implements CSVConverter{
     private int id;
     private String groupName;
@@ -50,5 +52,23 @@ public class Student extends Human implements CSVConverter{
                 ", id=" + id +
                 ", groupName='" + groupName + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Student student = (Student) o;
+
+        return id == student.id && Objects.equals(groupName, student.groupName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Objects.hash(id, groupName);
+        return result;
     }
 }
